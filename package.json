@@ -1,7 +1,7 @@
 {
-  "name": "mongodb-log-nestjs",
-  "version": "1.0.6",
-  "description": "Package for NestJs to log stuff on MongoDb",
+  "name": "mongodb-unstructured-log-nestjs",
+  "version": "1.0.0",
+  "description": "Package for NestJs to log stuff on MongoDb with unstructured data",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devMontagnini/mongodb-log-nestjs.git"
+    "url": "git+https://github.com/fernandosparapani/mongodb-log-nestjs.git"
   },
   "keywords": [
     "mongodb",
@@ -26,6 +26,7 @@
     "nestjs"
   ],
   "author": "André Montagnini",
+  "co-author": "Fernando Sparapani",
   "license": "ISC",
   "dependencies": {
     "@nestjs/common": "^7.3.2",
@@ -41,9 +42,9 @@
     "typescript": "^3.9.7"
   },
   "bugs": {
-    "url": "https://github.com/devMontagnini/mongodb-log-nestjs/issues"
+    "url": "https://github.com/fernandosparapani/mongodb-log-nestjs/issues"
   },
-  "homepage": "https://github.com/devMontagnini/mongodb-log-nestjs#readme",
+  "homepage": "https://github.com/fernandosparapani/mongodb-log-nestjs#readme",
   "directories": {
     "lib": "lib"
   }

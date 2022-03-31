@@ -24,6 +24,10 @@ export class MongodbLogService {
     return await this.register(this.logColletion, log);
   }
 
+  async registerUnstructured(log: any): Promise<InsertOneWriteOpResult<any>> {
+    return await this.registerUnstructuredLog(this.logColletion, log);
+  }
+
   async registerOn(collectionName: string, data: any): Promise<InsertOneWriteOpResult<any> | undefined> {
     const collection = this.additionalCollections[collectionName];
     if (!collection) {
@@ -31,6 +35,19 @@ export class MongodbLogService {
       return;
     }
     return await this.register(collection, data);
+  }
+
+  async registerUnstructuredOn(collectionName: string, data: any): Promise<InsertOneWriteOpResult<any> | undefined> {
+    const collection = this.additionalCollections[collectionName];
+    if (!collection) {
+      MongodbLogError.print(`Additional collection "${collectionName}" need to be set on module config.`);
+      return;
+    }
+    return await this.registerUnstructuredLog(collection, data);
+  }
+
+  private async registerUnstructuredLog(colletion: Collection, data: any): Promise<InsertOneWriteOpResult<any>> {
+    return await colletion.insertOne({ ...data });
   }
 
   private async register(colletion: Collection, data: any): Promise<InsertOneWriteOpResult<any>> {
