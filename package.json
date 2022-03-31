@@ -1,7 +1,7 @@
 {
   "name": "mongodb-unstructured-log-nestjs",
-  "version": "1.0.1",
-  "description": "Package for NestJs to log stuff on MongoDb with unstructured data",
+  "version": "1.0.2",
+  "description": "This package is fork of mongodb-log-nestjs with additional methods to register raw data",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
