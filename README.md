@@ -1,10 +1,10 @@
-# mongodb-log-nestjs
+# mongodb-unstructured-log-nestjs
 
 ## Description
-Package for NestJs to log stuff on MongoDb
+This package is fork of mongodb-log-nestjs with additional methos to register raw data
 
 ## Instalation
-```npm i --save mongodb-log-nestjs```
+```npm i --save mongodb-unstructured-log-nestjs```
 
 ## Quick Start
 
