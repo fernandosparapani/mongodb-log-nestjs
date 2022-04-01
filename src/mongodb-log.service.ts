@@ -57,7 +57,7 @@ export class MongodbLogService {
   //   return await this.registerUnstructuredLog(this.logColletion, log);
   // }
 
-  async registerLog(log: any, registerDate: boolean = false): Promise<InsertOneWriteOpResult<any>> {
+  async registerLog(log: any, registerDate: Boolean = false): Promise<InsertOneWriteOpResult<any>> {
 
     let timestampString: string;
     if(registerDate){
@@ -85,7 +85,7 @@ export class MongodbLogService {
   //   return await this.registerUnstructuredLog(collection, data);
   // }
 
-  async registerOn(collectionName: string, data: any, registerDate: boolean = false): Promise<InsertOneWriteOpResult<any> | undefined> {
+  async registerOn(collectionName: string, data: any, registerDate: Boolean = false): Promise<InsertOneWriteOpResult<any> | undefined> {
 
     let timestampString: string;
 
