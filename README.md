@@ -11,6 +11,7 @@ This package is fork of <b>mongodb-log-nestjs</b> with additional methods to reg
 <ol>
 
   **Important**
+  <br>
   By default, the Redis configuration is set to localhost:6379, use MongodbLogService constructor to modify if necessary
 
   <li>Import <b>MongodbLogModule</b> and use <b>forRoot</b> or <b>forRootAsync</b> static methods on your <b>AppModule</b> for initial configuration <i>(see parameters for configuration on <b>MongodbLogConfig</b> and <b>MongodbLogConfigAsync</b> files)</i>. </li>

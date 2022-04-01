@@ -1,6 +1,6 @@
 {
   "name": "mongodb-queue-log-nestjs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This package is fork of mongodb-log-nestjs with additional methods to register raw data from the Redis queue",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -18,12 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fernandosparapani/mongodb-log-nestjs.git"
+    "url": "git+https://github.com/fernandosparapani/mongodb-queue-log-nestjs.git"
   },
   "keywords": [
     "mongodb",
     "log",
-    "nestjs"
+    "nestjs",
+    "redis",
+    "queue"
   ],
   "author": "Fernando Sparapani",
   "co-author": "André Montagnini",
