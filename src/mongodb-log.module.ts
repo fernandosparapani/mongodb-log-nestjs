@@ -6,7 +6,6 @@ import { MongodbLogConfig } from './mongodb-log.config';
 import { MongodbLogServiceFactory } from './mongodb-log-service.factory';
 import { MongodbLogConnections } from './mongodb-log.connections';
 import { MongodbLogConfigAsync } from './mongodb-log.config.async';
-
 @Module({
   providers: [
     {
@@ -61,7 +60,7 @@ export class MongodbLogModule {
         {
           provide: MongodbLogService,
           useFactory: MongodbLogServiceFactory.create,
-          inject: [MONGODB_LOG_CONFIG, MongodbLogConnections],
+          inject: [MONGODB_LOG_CONFIG, MongodbLogConnections, ],
         },
       ],
     };

@@ -1,7 +1,7 @@
 {
-  "name": "mongodb-unstructured-log-nestjs",
-  "version": "1.0.2",
-  "description": "This package is fork of mongodb-log-nestjs with additional methods to register raw data",
+  "name": "mongodb-queue-log-nestjs",
+  "version": "1.0.3",
+  "description": "This package is fork of mongodb-log-nestjs with additional methods to register raw data from the Redis queue",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -25,15 +25,18 @@
     "log",
     "nestjs"
   ],
-  "author": "André Montagnini",
-  "co-author": "Fernando Sparapani",
+  "author": "Fernando Sparapani",
+  "co-author": "André Montagnini",
   "license": "ISC",
   "dependencies": {
     "@nestjs/common": "^7.3.2",
+    "bull": "^4.8.1",
+    "date-fns-tz": "^1.3.3",
     "mongodb": "^3.5.9",
     "rxjs": "^6.6.0"
   },
   "devDependencies": {
+    "@types/bull": "^3.15.8",
     "@types/mongodb": "^3.5.25",
     "@typescript-eslint/eslint-plugin": "^3.8.0",
     "@typescript-eslint/parser": "^3.8.0",
@@ -42,9 +45,9 @@
     "typescript": "^3.9.7"
   },
   "bugs": {
-    "url": "https://github.com/fernandosparapani/mongodb-log-nestjs/issues"
+    "url": "https://github.com/fernandosparapani/mongodb-queue-log-nestjs/issues"
   },
-  "homepage": "https://github.com/fernandosparapani/mongodb-log-nestjs#readme",
+  "homepage": "https://github.com/fernandosparapani/mongodb-queue-log-nestjs#readme",
   "directories": {
     "lib": "lib"
   }
