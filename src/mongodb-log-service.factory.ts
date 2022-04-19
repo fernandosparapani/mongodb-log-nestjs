@@ -20,9 +20,9 @@ export class MongodbLogServiceFactory {
         config.logsCollectionName || DEFAULT_LOG_COLLECTION_NAME,
         config.redisHost || DEFAULT_REDIS_HOST,
         config.redisPort || DEFAULT_REDIS_PORT,
-        config.additionalCollectionNames,
         config.timezone || DEFAULT_TIMEZONE,
         config.localeTimezone || DEFAULT_LOCALE_TIMEZONE,
+        config.additionalCollectionNames,
       );
     } catch (error) {
       MongodbLogError.print(error.message);
