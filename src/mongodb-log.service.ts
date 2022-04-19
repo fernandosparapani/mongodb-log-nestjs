@@ -28,11 +28,11 @@ export class MongodbLogService {
   }
 
   async queueListener() {
-    let queue = this.mongoQueue;
+    const queue = this.mongoQueue;
     const database = this.client.db(this.databaseName);
 
       queue.process(async (job, done) => {
-        let logColletion: Collection = database.collection(job.data.collection);
+        const logColletion: Collection = database.collection(job.data.collection);
         try {
           await logColletion.insertOne({ ...job.data });
         } catch (error) {
