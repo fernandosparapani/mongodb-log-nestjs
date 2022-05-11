@@ -7,4 +7,6 @@ export interface MongodbLogConfig {
   localeTimezone?: string;
   redisHost: string;
   redisPort: string;
+  ApiEndpoint?: string;
+  ApiHeaders?: string;
 }

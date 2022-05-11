@@ -23,6 +23,8 @@ export class MongodbLogServiceFactory {
         config.timezone || DEFAULT_TIMEZONE,
         config.localeTimezone || DEFAULT_LOCALE_TIMEZONE,
         config.additionalCollectionNames,
+        config.ApiEndpoint,
+        config.ApiHeaders
       );
     } catch (error) {
       MongodbLogError.print(error.message);
