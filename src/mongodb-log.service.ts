@@ -25,7 +25,7 @@ export class MongodbLogService {
     this.additionalCollectionNames?.forEach((name) => {
       this.additionalCollections[name] = database.collection(name);
     });
-    this.mongoQueue = new Queue('mongodb-queue-nestjs-'+database, 'redis://' + this.redisHost + ':' + this.redisPort);
+    this.mongoQueue = new Queue('mongodb-queue-nestjs-'+this.databaseName, 'redis://' + this.redisHost + ':' + this.redisPort);
     this.queueListener();
   }
 
