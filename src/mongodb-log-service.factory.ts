@@ -4,6 +4,7 @@ import { MongodbLogConnections } from './mongodb-log.connections';
 import { DEFAULT_LOG_COLLECTION_NAME, MONGODB_LOG_CONFIG, DEFAULT_TIMEZONE, DEFAULT_LOCALE_TIMEZONE, DEFAULT_REDIS_HOST, DEFAULT_REDIS_PORT } from './constants';
 import { MongodbLogError } from './mongodb-log.error';
 import { Inject } from '@nestjs/common';
+
 export class MongodbLogServiceFactory {
   static async create(
     @Inject(MONGODB_LOG_CONFIG) config: MongodbLogConfig,
@@ -27,7 +28,7 @@ export class MongodbLogServiceFactory {
         config.ApiHeaders
       );
     } catch (error) {
-      MongodbLogError.print(error.message);
+      MongodbLogError.print(error.toString());
       throw error;
     }
   }
