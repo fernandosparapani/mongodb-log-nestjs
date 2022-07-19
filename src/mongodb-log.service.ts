@@ -2,6 +2,8 @@ import { MongoClient, Collection } from 'mongodb';
 import { MongodbLogError } from './mongodb-log.error';
 import * as Queue from 'bull';
 import axios from 'axios';
+import { utcToZonedTime, format } from 'date-fns-tz'
+import pino from 'pino'
 
 export class MongodbLogService {
   private logColletion: Collection;
@@ -15,18 +17,27 @@ export class MongodbLogService {
     private readonly redisHost: string,
     private readonly redisPort: string,
     private readonly timezone: string,
-    private readonly localeTimezone: string,
+    private readonly timezoneFormat: string,
+    private readonly localErrorPath: string,
     private readonly additionalCollectionNames?: string[],
     private readonly apiLoggerEndpoint?: string,
     private readonly apiHeaders?: string
   ) {
-    const database = this.client.db(this.databaseName);
-    this.logColletion = database.collection(this.logsCollectionName);
-    this.additionalCollectionNames?.forEach((name) => {
-      this.additionalCollections[name] = database.collection(name);
-    });
-    this.mongoQueue = new Queue('mongodb-queue-nestjs-'+this.databaseName, 'redis://' + this.redisHost + ':' + this.redisPort);
-    this.queueListener();
+    try {
+      const database = this.client.db(this.databaseName);
+      this.logColletion = database.collection(this.logsCollectionName);
+      this.additionalCollectionNames?.forEach((name) => {
+        this.additionalCollections[name] = database.collection(name);
+      });
+    } catch (error) {
+      this.internalErrorLog(error)
+    }
+    try {
+      this.mongoQueue = new Queue('mongodb-queue-nestjs-' + this.databaseName, 'redis://' + this.redisHost + ':' + this.redisPort);
+      this.queueListener();
+    } catch (error) {
+      this.internalErrorLog(error)
+    }
   }
 
   async queueListener() {
@@ -43,8 +54,9 @@ export class MongodbLogService {
           const apiHeaders = JSON.parse(JSON.stringify(this.apiHeaders))
 
           try {
-            await axios.post(this.apiLoggerEndpoint, data, { headers: { apiHeaders }});
+            await axios.post(this.apiLoggerEndpoint, data, { headers: { apiHeaders } });
           } catch (error) {
+            this.internalErrorLog(error)
             MongodbLogError.print("error when call API " + this.apiLoggerEndpoint + error);
           }
 
@@ -53,6 +65,7 @@ export class MongodbLogService {
         }
 
       } catch (error) {
+        this.internalErrorLog(error)
         MongodbLogError.print("Error when execute log queue: " + error);
       }
       done();
@@ -79,6 +92,7 @@ export class MongodbLogService {
 
     const collection = this.additionalCollections[collectionName];
     if (!collection) {
+      this.internalErrorLog({ message: `Additional collection "${collectionName}" need to be set on module config.` })
       MongodbLogError.print(`Additional collection "${collectionName}" need to be set on module config.`);
       return;
     }
@@ -92,7 +106,7 @@ export class MongodbLogService {
       data = { ...data, date: timestampString, collection: colletion.collectionName }
     }
 
-    if(useAPI){
+    if (useAPI) {
       data = { ...data, useAPI }
     }
 
@@ -110,12 +124,32 @@ export class MongodbLogService {
         }
       });
     } catch (error) {
+      this.internalErrorLog(error)
       MongodbLogError.print("Error to add on log queue: " + error);
     }
   }
 
   private getTimestampString(): string {
-    return new Date().toLocaleString(this.localeTimezone, { timeZone: this.timezone })
+    const date = new Date()
+    const timeZone = 'America/Sao_Paulo'
+    const zonedDate = utcToZonedTime(date, timeZone)
+    // zonedDate could be used to initialize a date picker or display the formatted local date/time
+
+    const pattern = this.timezoneFormat
+    const output = format(zonedDate, pattern, { timeZone: this.timezone })
+
+    return output
+  }
+
+  private internalErrorLog(error: any) {
+    const date = this.getTimestampString()
+    const destination = pino.destination(`${this.localErrorPath}/error-log.txt`)
+    const logger = pino(destination)
+    try {
+      logger.error({ ...error, date })
+    } catch (error) {
+      MongodbLogError.print("Error to write a log: " + error);
+    }
   }
 
 }

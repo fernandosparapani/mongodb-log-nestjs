@@ -4,7 +4,8 @@ export interface MongodbLogConfig {
   logsCollectionName?: string;
   additionalCollectionNames?: string[];
   timezone?: string;
-  localeTimezone?: string;
+  timezoneFormat?: string;
+  localErrorPath: string;
   redisHost: string;
   redisPort: string;
   ApiEndpoint?: string;
