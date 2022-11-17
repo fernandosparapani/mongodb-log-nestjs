@@ -4,7 +4,7 @@ import { MongodbLogConnections } from './mongodb-log.connections';
 import { DEFAULT_LOG_COLLECTION_NAME, MONGODB_LOG_CONFIG, DEFAULT_TIMEZONE, DEFAULT_TIMEZONE_FORMAT, DEFAULT_REDIS_HOST, DEFAULT_REDIS_PORT, DEFAULT_ERROR_PATH } from './constants';
 import { MongodbLogError } from './mongodb-log.error';
 import { Inject } from '@nestjs/common';
-
+import axios from 'axios';
 export class MongodbLogServiceFactory {
   static async create(
     @Inject(MONGODB_LOG_CONFIG) config: MongodbLogConfig,
@@ -29,6 +29,18 @@ export class MongodbLogServiceFactory {
         config.ApiHeaders
       );
     } catch (error) {
+      try {
+
+        await axios.post(process.env.TEAMS_WEBHOOK, {
+          title: "MongoDB Connection Error",
+          text: JSON.stringify(error),
+          themeColor: "FF0000"
+        }, { headers: { 'Content-Type': 'application/json' } });
+
+      } catch (error) {
+        MongodbLogError.print("error when call Webhook: " + error);
+      }
+      
       MongodbLogError.print(error.toString());
       throw error;
     }

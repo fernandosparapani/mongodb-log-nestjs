@@ -1,6 +1,6 @@
 {
   "name": "mongodb-queue-log-nestjs",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "This package is fork of mongodb-log-nestjs with additional methods to register raw data from the Redis queue",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
